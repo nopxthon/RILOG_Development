@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+
+# Misc
+.DS_Store
+
+# Abaikan semua isi folder payments dan profile
+uploads/payments/*
+
+!uploads/payments/.gitkeep
+
+uploads/profile/*
+
+!uploads/profile/.gitkeep
