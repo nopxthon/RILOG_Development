@@ -18,7 +18,7 @@ import PaymentTable from "@/components/superadmin-langganan/PaymentTable";
 import LogTable from "@/components/superadmin-langganan/LogTable";
 
 // URL API
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_LOGOUT_URL = `${API_BASE_URL}/api/superadmin/logout`;
 
 const LanggananPage: React.FC = () => {
@@ -67,14 +67,14 @@ const LanggananPage: React.FC = () => {
 
       if (activeTab === "pengguna") {
         // 🔥 Pastikan URL ini benar sesuai server.js
-        url = `${API_BASE_URL}/superadmin-langganan/users?status=${filterStatus}`; 
+        url = `${API_BASE_URL}/api/superadmin-langganan/users?status=${filterStatus}`; 
         const res = await axios.get(url, config);
         setBisnisData(res.data);
 
       } else if (activeTab === "verifikasi") {
         // 🔥 PERBAIKAN LOGIKA URL DISINI 🔥
         const queryStatus = filterStatus !== "Semua" ? `?status=${filterStatus}` : "";
-        url = `${API_BASE_URL}/payment/all${queryStatus}`; // ✅ URL BARU
+        url = `${API_BASE_URL}/api/payment/all${queryStatus}`; // ✅ URL BARU
         
         const res = await axios.get(url, config);
         setPaymentData(res.data);
@@ -85,7 +85,7 @@ const LanggananPage: React.FC = () => {
 
       } else if (activeTab === "log") {
         // 🔥 Pastikan URL ini benar sesuai server.js
-        url = `${API_BASE_URL}/superadmin-langganan/logs`; 
+        url = `${API_BASE_URL}/api/superadmin-langganan/logs`; 
         const res = await axios.get(url, config);
         setLogData(res.data);
     }
@@ -155,7 +155,7 @@ const LanggananPage: React.FC = () => {
 
     try {
       const token = localStorage.getItem("superToken");
-      await axios.put(`${API_BASE_URL}/superadmin/users/${selectedItem.id}`, 
+      await axios.put(`${API_BASE_URL}/api/superadmin/users/${selectedItem.id}`, 
         { status: editStatus }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -203,7 +203,7 @@ const LanggananPage: React.FC = () => {
       const token = localStorage.getItem("superToken");
       
       // Menggunakan endpoint PUT verifikasi
-      await axios.put(`${API_BASE_URL}/payment/process/${id}`, // ✅ URL BARU
+      await axios.put(`${API_BASE_URL}/api/payment/process/${id}`, // ✅ URL BARU
         { action }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
