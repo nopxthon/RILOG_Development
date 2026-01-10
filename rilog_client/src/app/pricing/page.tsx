@@ -20,6 +20,8 @@ export default function PricingSection() {
   // Toggle state: 'monthly' (Bulanan) atau 'yearly' (Tahunan)
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
 
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
   // 1. AMBIL DATA (Paket & User Subscription)
   useEffect(() => {
     const fetchData = async () => {
@@ -28,14 +30,14 @@ export default function PricingSection() {
         setIsLoggedIn(!!token);
 
         // A. Ambil Daftar Paket
-        const response = await axios.get("http://localhost:5000/api/sub-plans");
+        const response = await axios.get(`${API_BASE_URL}/api/sub-plans`);
         const rawData = response.data.data || response.data;
         setPlans(Array.isArray(rawData) ? rawData : []);
 
         // B. Ambil Data Paket User Saat Ini (Jika Login)
         if (token) {
           try {
-            const myBisnisRes = await axios.get("http://localhost:5000/api/payment/my-subscription", {
+            const myBisnisRes = await axios.get(`${API_BASE_URL}/api/payment/my-subscription`, {
               headers: { Authorization: `Bearer ${token}` }
             });
 

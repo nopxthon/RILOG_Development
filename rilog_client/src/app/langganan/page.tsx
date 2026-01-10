@@ -18,8 +18,8 @@ import PaymentTable from "@/components/superadmin-langganan/PaymentTable";
 import LogTable from "@/components/superadmin-langganan/LogTable";
 
 // URL API
-const API_BASE_URL = "http://localhost:5000/api";
-const API_LOGOUT_URL = "http://localhost:5000/api/superadmin/logout";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_LOGOUT_URL = `${API_BASE_URL}/api/superadmin/logout`;
 
 const LanggananPage: React.FC = () => {
   // --- STATE UI ---
