@@ -109,6 +109,20 @@ const LanggananPage: React.FC = () => {
   const handleLogout = () => setShowLogoutModal(true);
   
   const confirmLogout = async () => {
+    console.log("🚀 1. Proses Logout Dimulai..."); // Cek apakah tombol bisa diklik
+
+    // A. HAPUS DATA LOKAL DULUAN (Supaya user pasti keluar)
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+      // Hapus cookie secara manual untuk memastikan bersih
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+      console.log("✅ 2. LocalStorage & Cookie Bersih");
+    } catch (e) {
+      console.error("❌ Gagal hapus storage:", e);
+    }
     try {
       const token = localStorage.getItem("superToken");
       if (token) {
@@ -155,7 +169,7 @@ const LanggananPage: React.FC = () => {
 
     try {
       const token = localStorage.getItem("superToken");
-      await axios.put(`${API_BASE_URL}/api/superadmin/users/${selectedItem.id}`, 
+      await axios.put(`${API_BASE_URL}/api/superadmin-langganan/users/${selectedItem.id}`, 
         { status: editStatus }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
